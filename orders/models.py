@@ -29,7 +29,7 @@ class SizeOfPizza(models.Model):
 # Class that defines the pizza existing in the restaurant
 class Pizza(models.Model):
 	name = models.CharField(max_length=64)
-	description = models.TextField(default="")
+	description = models.TextField(default="", blank=True)
 	custom = models.BooleanField(default=False)
 	numberOfToppings = models.IntegerField(default=0)
 	
@@ -69,7 +69,7 @@ class PriceOfSub(models.Model):
 # Class that defines the Dinners available in this restaurant
 class Dinner(models.Model):
 	name = models.CharField(max_length=64)
-	description = models.TextField(default="")
+	description = models.TextField(default="", blank=True)
 	prices = models.ManyToManyField(Size, through='PriceOfDinner')
 
 	def __str__(self):
@@ -95,7 +95,7 @@ class Topping(models.Model):
 # Class that defines the pasta available in this restaurant
 class Pasta(models.Model):
 	name = models.CharField(max_length=64)
-	description = models.TextField(default="")
+	description = models.TextField(default="", blank=True)
 	price = models.DecimalField(max_digits=6, decimal_places=2)
 
 	def __str__(self):
@@ -105,7 +105,7 @@ class Pasta(models.Model):
 # Class that defines the salads available in this restaurant
 class Salad(models.Model):
 	name = models.CharField(max_length=64)
-	description = models.TextField(default="")
+	description = models.TextField(default="", blank=True)
 	price = models.DecimalField(max_digits=6, decimal_places=2)
 	
 	def __str__(self):
