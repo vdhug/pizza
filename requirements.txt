@@ -1,1 +1,2 @@
 Django==2.0.3
+django_heroku
