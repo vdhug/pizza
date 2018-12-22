@@ -1,0 +1,48 @@
+{% extends "orders/layout.html" %}
+
+{% block title %}
+	Rest - Login
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', () => {
+			var menu = document.querySelectorAll('.icon-enter');
+			debugger
+			for (i =0; i<menu.length; i++){
+				menu[i].classList.add("current_page_item");
+			}
+		});
+	</script>
+{% endblock %}
+
+{% block log %}
+	<a class="icon-enter" href="{% url 'login' %}" title="Login"></a>
+{% endblock %}
+{% block logfooter %}
+	<a class="icon-enter" href="{% url 'login' %}" title="Login"></a>
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<h2 class="subtitulo">Login</h2>
+		<form class="form grid-8" action="{% url 'login' %}" method="post">
+    		{% csrf_token %}
+
+			<h2>Username</h2>
+			<input type="text" name="username">
+
+			<h2>Password</h2>
+			<input type="password" name="password">
+			{% if message %}
+				<div>
+					{{ message }}
+				</div>
+			{% endif %}
+
+			<input class="btn" type="submit" value="Login">
+			<p class="chamada-registro">Not a member? <a href="{% url 'register' %}">Register here</a></p>
+		</form>
+	</section>
+
+{% endblock %}

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,13 @@ WSGI_APPLICATION = 'pizza.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd28okh50n2hj13',
+        'URI': 'postgres://frflsatugdpmbt:335b9433d0f1d292095d00f868b888489760cc12ec970130fa2e6a19520fa6ed@ec2-54-235-247-209.compute-1.amazonaws.com:5432/d28okh50n2hj13',
+        'USER': 'frflsatugdpmbt',
+        'PASSWORD': '335b9433d0f1d292095d00f868b888489760cc12ec970130fa2e6a19520fa6ed',
+        'HOST': 'ec2-54-235-247-209.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}{% endblock %}</title>
+		{% block js %}{% endblock %}
+
+		<link href='https://fonts.googleapis.com/css?family=Alegreya+SC' rel='stylesheet' type='text/css'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="{% static 'orders/css/styles.css' %}"/>
+        
+		{% block script %}
+		{% endblock %}
+	</head>
+
+	<body>
+		
+		<header>
+			<nav>
+				<ul>
+					<li><a class="icon-menu" title="Our Menu"  href="{% url 'index' %}"></a></li>
+					<li><a class="icon-cart" title="Shopping cart" href="{% url 'cart' %}"></a></li>
+					{% if user %}
+						<li><a class="icon-orders" href="{% url 'orders' %}" title="My Orders"></a></li>
+					{% endif %}
+					<li>{% block log %} {% endblock %}</li>
+					
+				</ul>
+			</nav>
+
+			<h1><img src="{% static 'orders/img/rest.png' %}" alt="Rest"></h1>
+
+			<p>74 Winthrop Street – Harvard Square</p>
+			<p class="telefone">617-876-4897</p>
+		</header>
+
+		{% block body %}
+        {% endblock %}
+        
+		<footer>
+			<nav>
+				<ul>
+					<li><a class="icon-menu" title="Our Menu"  href="{% url 'index' %}"></a></li>
+					<li><a class="icon-cart" title="Shopping cart" href="{% url 'cart' %}"></a></li>
+					{% if user %}
+						<li><a class="icon-orders" href="{% url 'orders' %}" title="My Orders"></a></li>
+					{% endif %}
+					<li>{% block logfooter %} {% endblock %}</li>
+				</ul>
+			</nav>
+
+			<p>Rest © 2018. Some rights reserved.</p>
+		</footer>
+
+	</body>
+</html>
