@@ -1,14 +1,14 @@
 {% extends "orders/layout.html" %}
 
 {% block title %}
-	Rest - My Orders
+	Rest - Register
 {% endblock %}
 
 {% block js %}
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', () => {
 			var menu = document.querySelectorAll('.icon-orders');
-			debugger
+			
 			for (i =0; i<menu.length; i++){
 				menu[i].style.color= "#f17060";
 			}
@@ -28,26 +28,26 @@
 
 
 {% block body %}
-
+	
 	<section class="container">
 		<h2 class="subtitulo">My Orders</h2>
 		<div class="grid-16 cart-head">
 			<ul>
-				<li style="width: 25%">Order</li>
-				<li style="width: 20%">Submitted</li>
-				<li style="width: 20%">Total</li>
-				<li style="width: 15%">Status</li>
-				<li style="width: 15%">Delivered</li>
+				<li class="mobile-hide ap-width-25">Order</li>
+				<li class="ap-width-20 mobile-1-4">Submitted</li>
+				<li class="ap-width-20 mobile-1-4">Total</li>
+				<li class="ap-width-15 mobile-1-5">Status</li>
+				<li class="ap-width-15 mobile-hide">Delivered</li>
 			</ul>
 		</div>
 		<div class="grid-16 cart-body">
 			{% for order in orders.all %}
 			<ul>
-				<li style="width: 25%">{{order.id}}</li>
-				<li style="width: 20%">{{order.date_submitted}}</li>
-				<li style="width: 20%">{{order.total}}</li>
-				<li style="width: 15%">{{order.status_order}}</li>
-				<li style="width: 15%">{% if order.date_delivered %} {{order.date_delivered}} {% endif %}</li>
+				<li class="mobile-hide ap-width-25">{{order.id}}</li>
+				<li class="ap-width-20 mobile-1-4">{{order.date_submitted}}</li>
+				<li class="ap-width-20 mobile-1-4"><sup>U$</sup>{{order.total}}</li>
+				<li class="ap-width-15 mobile-1-5">{{order.status_order}}</li>
+				<li class="ap-width-15 mobile-hide">{% if order.date_delivered %} {{order.date_delivered}} {% endif %}</li>
 			</ul>
 			{% endfor %}
 		</div>

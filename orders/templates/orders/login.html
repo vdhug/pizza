@@ -8,7 +8,7 @@
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', () => {
 			var menu = document.querySelectorAll('.icon-enter');
-			debugger
+			
 			for (i =0; i<menu.length; i++){
 				menu[i].classList.add("current_page_item");
 			}
@@ -35,7 +35,7 @@
 			<h2>Password</h2>
 			<input type="password" name="password">
 			{% if message %}
-				<div>
+				<div class="erro-login">
 					{{ message }}
 				</div>
 			{% endif %}

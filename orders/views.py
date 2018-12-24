@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+import pdb
 
 from .models import *
 
@@ -66,7 +67,7 @@ def index(request):
 
 def auth_register(request):
 	if request.method == "GET":
-		return render(request, "orders/register.html")
+		return render(request, "orders/register.html", {"user": request.user.is_authenticated})
 	else:
 		username = request.POST["username"]
 		email = request.POST["email"]
@@ -94,7 +95,7 @@ def auth_login(request):
 				login(request, user)
 				return HttpResponseRedirect(reverse("index"))
 			else:
-				return render(request, "orders/login.html", {"message": "Invalid credentials"})
+				return render(request, "orders/login.html", {"message": "Invalid credentials", "user": request.user.is_authenticated})
 		except Exception as e:
 			return render(request, "orders/login.html", {"message": str(e)})
 		
