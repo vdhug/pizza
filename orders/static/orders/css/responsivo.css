@@ -8,12 +8,10 @@
 }
 
 .menu-item li:hover > div {
-	background-color: #202020;
+	background-color: #131313;
 }
 
-.button a span:hover {
-	color: #fff;
-}
+
 
 
 .cart ul {
