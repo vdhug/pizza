@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 						button.disabled = false;
 						button.title = "Remove from the cart";
 						button.classList.add("itemIsSelected");
-						button.style.color = "#f17060"
 						button.dataset.operation = "remove";
 					},
 					failure: function(data) { 
@@ -42,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 						debugger
 						button.title = "Add to the cart";
 						button.classList.remove("itemIsSelected");
-						button.style.color = "#fff"
 						button.dataset.operation = "add";
 					},
 					failure: function(data) { 
