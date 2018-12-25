@@ -7,6 +7,15 @@
 	font-size: 1rem;
 }
 
+.menu-item li:hover > div {
+	background-color: #202020;
+}
+
+.button a span:hover {
+	color: #fff;
+}
+
+
 .cart ul {
 	margin-bottom: 10px;
 }
