@@ -785,7 +785,7 @@ input::-webkit-inner-spin-button {
   color: #f17060;
 }
 
-.menu-item .itemIsSelected {
+.menu-item .itemIsSelected, .itemIsSelected{
   color: #f17060;
 }
 
@@ -1082,9 +1082,11 @@ footer {
   width: 50px;
   background-color: #202020;
 }
-
-.button a span:hover {
+@media only screen and (min-width: 1025px) {
+.item:hover {
   color: #f17060;
+}
+
 }
 
 

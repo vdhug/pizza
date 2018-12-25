@@ -393,7 +393,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					},
 					success: function(data) {
 						debugger
-						location.reload()
+						if(data === "success"){
+							location.reload()
+						}
+						else {
+							window.location.replace("/login")
+						}
 					},
 					failure: function(data) { 
 						debugger

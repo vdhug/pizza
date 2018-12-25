@@ -12,7 +12,8 @@ from .models import *
 
 # Create your views here.
 def index(request):
-
+	if request.session.has_key('message'):
+		del request.session['message']
 	if not request.session.has_key('pizza'):
 		request.session['pizza'] = []
 	
@@ -82,8 +83,12 @@ def auth_register(request):
 
 def auth_login(request):
 	if request.method == "GET":
+
 		if not request.user.is_authenticated:
-			return render(request, "orders/login.html", {"user": request.user.is_authenticated})
+			context = {"user": request.user.is_authenticated}
+			if request.session.has_key('message'):
+				context['message'] = request.session['message']
+			return render(request, "orders/login.html", context)
 		else:
 			return HttpResponseRedirect(reverse("index"))
 	if request.method == "POST":
@@ -170,7 +175,8 @@ def remove_item(request):
 
 
 def cart(request):
-
+	if request.session.has_key('message'):
+		del request.session['message']
 	# Checking if the key item exist in the session 
 	if not request.session.has_key('pizza'):
 		request.session['pizza'] = []
@@ -319,6 +325,7 @@ def update_progress(request):
 				} 
 				request.session['address'] = address
 				request.session['progress'] = "finish"
+				
 
 		if operation == "previous":
 			if progress == "place-order":
@@ -335,10 +342,10 @@ def update_progress(request):
 
 @csrf_exempt
 def submit_order(request):
-
 	if not request.user.is_authenticated:
-		return HttpResponseRedirect(reverse("auth_login"))
-
+		request.session['message'] = "Please, login to finish your order ;)"
+		return HttpResponseRedirect(reverse("login"))
+	
 	items = json.loads(request.POST.get('items'))
 	items_order = []
 	total = 0.0

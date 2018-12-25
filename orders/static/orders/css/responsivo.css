@@ -11,10 +11,6 @@
 	background-color: #202020;
 }
 
-.button a span:hover {
-	color: #fff;
-}
-
 
 
 .cart ul {
@@ -31,6 +27,7 @@
 
 .cart-input {
 	width: 30px;
+	height: 30px;
 }
 
 .cart-body .mobile-hide, .cart-head .mobile-hide {
