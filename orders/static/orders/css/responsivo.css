@@ -48,4 +48,8 @@
 	width: 25%;
 }
 
+.telefone:after, .telefone:before {
+    width: 70px;
+}
+
 } /* Final do estilo para smartphone 
