@@ -16,7 +16,9 @@ def index(request):
 		del request.session['message']
 	if not request.session.has_key('pizza'):
 		request.session['pizza'] = []
-	
+	if not request.session.has_key('items_in_cart'):
+		request.session['items_in_cart'] = 0
+
 	if not request.session.has_key('dinner'):
 		request.session['dinner'] = []
 	
@@ -59,6 +61,7 @@ def index(request):
 	   "dinners": Dinner.objects.all(),
 	   "user": request.user.is_authenticated,
 	   "items": items,
+	   "items_in_cart": request.session['items_in_cart'],
 	   "subs": Sub.objects.all()
     }
     
@@ -85,7 +88,9 @@ def auth_login(request):
 	if request.method == "GET":
 
 		if not request.user.is_authenticated:
-			context = {"user": request.user.is_authenticated}
+			if not request.session.has_key('items_in_cart'):
+				request.session['items_in_cart'] = 0
+			context = {"user": request.user.is_authenticated, "items_in_cart": request.session['items_in_cart']}
 			if request.session.has_key('message'):
 				context['message'] = request.session['message']
 			return render(request, "orders/login.html", context)
@@ -122,7 +127,10 @@ def add_item(request):
 		items = request.session[item][:]
 		items.append({price_id: 1})
 		request.session[item] = items;
-
+		if not request.session.has_key('items_in_cart'):
+			request.session['items_in_cart'] = 0
+		items_in_cart = request.session['items_in_cart'] + 1
+		request.session['items_in_cart'] = items_in_cart
 		return HttpResponse(f"{item} - {request.session[item]}")
 	
 	except Exception as e:
@@ -161,6 +169,10 @@ def remove_item(request):
 
 		items = request.session[item][:]
 		value = 0
+		if not request.session.has_key('items_in_cart'):
+			request.session['items_in_cart'] = 1
+		items_in_cart = request.session['items_in_cart'] - 1
+		request.session['items_in_cart'] = items_in_cart
 		for i in range(len(items)):
 			if list(items[i])[0] == price_id:
 				quantity = items[i][list(items[i])[0]]
@@ -181,6 +193,10 @@ def cart(request):
 	if not request.session.has_key('pizza'):
 		request.session['pizza'] = []
 
+	if not request.session.has_key('items_in_cart'):
+		request.session['items_in_cart'] = 0
+
+	
 	if not request.session.has_key('dinner'):
 		request.session['dinner'] = []
 	
@@ -294,6 +310,7 @@ def cart(request):
 				"toppings": Topping.objects.all(),
 				"progress": progress,
 				"address": address,
+				"items_in_cart": request.session['items_in_cart'],
 	   			"user": request.user.is_authenticated
 			}
 	return render(request, "orders/cart.html", context)
@@ -345,7 +362,10 @@ def submit_order(request):
 	if not request.user.is_authenticated:
 		request.session['message'] = "Please, login to finish your order ;)"
 		return HttpResponseRedirect(reverse("login"))
+	if not request.session.has_key('items_in_cart'):
+			request.session['items_in_cart'] = 0
 	
+	request.session['items_in_cart'] = 0
 	items = json.loads(request.POST.get('items'))
 	payment_type = request.POST.get('payment')
 	pdb.set_trace()
@@ -434,8 +454,11 @@ def submit_order(request):
 def orders(request):
 
 	orders = request.user.orders
+	if not request.session.has_key('items_in_cart'):
+		request.session['items_in_cart'] = 0
 
 	context = {
-		"orders": orders
+		"orders": orders,
+		"items_in_cart": request.session['items_in_cart']
 	}
 	return render(request, "orders/orders.html", context)

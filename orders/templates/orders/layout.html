@@ -1,4 +1,8 @@
 {% load static %}
+
+<!-- Loading helpers functions to use in the template -->
+{% load helpers %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -22,7 +26,12 @@
 			<nav>
 				<ul>
 					<li><a class="icon-menu" title="Our Menu"  href="{% url 'index' %}"></a></li>
-					<li><a class="icon-cart" title="Shopping cart" href="{% url 'cart' %}"></a></li>
+					<li><a class="icon-cart" title="Shopping cart" href="{% url 'cart' %}">
+							<span>
+								<sup id="items_in_cart">{% if items_in_cart|isGreaterThanZero %}{{items_in_cart}}{% endif %}</sup>
+							</span>	
+						</a>
+					</li>
 					{% if user %}
 						<li><a class="icon-orders" href="{% url 'orders' %}" title="My Orders"></a></li>
 					{% endif %}
