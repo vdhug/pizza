@@ -131,8 +131,19 @@ class Order(models.Model):
 		default='SUBMITTED',
 	)
 
+	PAYMENT_TYPES_CHOICES = (
+		('MONEY', 'Money'),
+		('DEBIT_CARD', 'Debit Card'),
+		('CREDIT_CARD', 'Credit Card'),
+	)
+	payment_type = models.CharField(
+		max_length=50,
+		choices=PAYMENT_TYPES_CHOICES,
+		default='CREDIT_CARD',
+	)
+
 	def __str__(self):
-		return f"{self.user.username} - {self.status_order} "
+		return f"{self.user.username} - {self.status_order} - {self.payment_type}"
 
 
 class ItemOrder(models.Model):

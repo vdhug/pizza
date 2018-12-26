@@ -383,13 +383,23 @@ document.addEventListener('DOMContentLoaded', () => {
 				
 			});
 			var jsonText = JSON.stringify(items)
+
+			var payment_types = document.getElementsByName("payment-type");
+			var payment = "";
+			for (var i = 0; i < payment_types.length; i++) {
+				if (payment_types[i].checked) {
+					console.log("Escolheu: " + payment_types[i].value);
+					payment = payment_types[i].value;
+				}
+			}
 			debugger
 			$.ajax({
 					url: '/submit_order',
 					csrfmiddlewaretoken: '{{ csrf_token }}',
 					type: 'POST',
 					data: {
-						items: jsonText
+						items: jsonText,
+						payment: payment
 					},
 					success: function(data) {
 						debugger

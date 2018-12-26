@@ -12,6 +12,9 @@
 }
 
 
+.payment ul li {
+	font-size: 1rem;
+}
 
 .cart ul {
 	margin-bottom: 10px;
@@ -54,6 +57,15 @@
 .mobile-1-4 {
 	width: 25%;
 }
+.payment ul li input {
+	width: 15%;
+}
+.payment ul li {
+	display: block;
+	width: 100%;
+}
+
+
 
 .telefone:after, .telefone:before {
     width: 70px;

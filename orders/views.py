@@ -347,9 +347,11 @@ def submit_order(request):
 		return HttpResponseRedirect(reverse("login"))
 	
 	items = json.loads(request.POST.get('items'))
+	payment_type = request.POST.get('payment')
+	pdb.set_trace()
 	items_order = []
 	total = 0.0
-	order = Order(status_order="SUBMITTED", user=request.user, total=total)
+	order = Order(status_order="SUBMITTED", user=request.user, total=total, payment_type= payment_type)
 	for item in items:
 		i = PriceOfPizza.objects.get(pk=item['key'])
 		description = f"{i.pizza.name} - {i.sizeOfPizza.size.name} Size - Toppings: "

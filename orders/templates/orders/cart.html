@@ -212,7 +212,7 @@
 	{% if progress|stringIsEqual:"finish" %}
 	<section class="container">
 		<h2 class="subtitulo">Confirmation</h2>
-		<form class="form grid-16" action="{% url 'login' %}" method="post">
+		<form class="form grid-16">
     		
 			{% for pizza, quantity in pizzas %}
 			<div class="grid-16 cart-body">
@@ -235,8 +235,15 @@
 				{% endfor %}
 				{% endif %}
 			</div>
-				
 			{% endfor %}
+
+			<div class="grid-16 payment">
+				<ul>
+					<li class="mobile-1-3"><input type="radio" name="payment-type" value="CREDIT_CARD" checked><label>Credit Card</label></li>
+					<li class="mobile-1-3"><input type="radio" name="payment-type" value="DEBIT_CARD">Debit Card</li>
+					<li class="mobile-1-5"><input type="radio" name="payment-type" value="MONEY">Money</li>
+				</ul>
+			</div>
 			{% if message %}
 				<div>
 					{{ message }}

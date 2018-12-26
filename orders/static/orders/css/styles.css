@@ -1078,6 +1078,16 @@ footer {
   padding: 10px 20px 10px 0;
 }
 
+.payment ul li {
+  display: inline-block;
+  width: 30%;
+  color: #FFF;
+}
+
+.payment ul li input {
+  width: 30%;
+}
+
 .button {
   width: 50px;
   background-color: #202020;
