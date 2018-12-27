@@ -368,7 +368,7 @@ def submit_order(request):
 	request.session['items_in_cart'] = 0
 	items = json.loads(request.POST.get('items'))
 	payment_type = request.POST.get('payment')
-	pdb.set_trace()
+	
 	items_order = []
 	total = 0.0
 	order = Order(status_order="SUBMITTED", user=request.user, total=total, payment_type= payment_type)
