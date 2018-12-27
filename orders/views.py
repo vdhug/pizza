@@ -453,7 +453,7 @@ def submit_order(request):
 
 def orders(request):
 
-	orders = reversed(request.user.orders)
+	orders = request.user.orders.order_by('date_submitted').desc()
 	if not request.session.has_key('items_in_cart'):
 		request.session['items_in_cart'] = 0
 
