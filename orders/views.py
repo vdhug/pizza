@@ -21,38 +21,38 @@ def index(request):
 
 	if not request.session.has_key('dinner'):
 		request.session['dinner'] = []
-	
+
 	if not request.session.has_key('sub'):
 		request.session['sub'] = []
-	
+
 	if not request.session.has_key('pasta'):
 		request.session['pasta'] = []
-	
+
 	if not request.session.has_key('salad'):
 		request.session['salad'] = []
-	
+
 	pizzas = []
 	for dic in request.session['pizza']:
 		pizzas.append(int(list(dic)[0]))
-	
+
 	dinners = []
 	for dic in request.session['dinner']:
 		dinners.append(int(list(dic)[0]))
-	
+
 	subs = []
 	for dic in request.session['sub']:
 		subs.append(int(list(dic)[0]))
-	
+
 	pastas = []
 	for dic in request.session['pasta']:
 		pastas.append(int(list(dic)[0]))
-	
+
 	salads = []
 	for dic in request.session['salad']:
 		salads.append(int(list(dic)[0]))
 
 	items = {"pizza": pizzas, "dinner": dinners, "sub": subs, "pasta": pastas, "salad": salads }
-	
+
 	context = {
 	   "typesOfPizza": TypeOfPizza.objects.all(),
 	   "pizzas": Pizza.objects.all(),
@@ -64,10 +64,10 @@ def index(request):
 	   "items_in_cart": request.session['items_in_cart'],
 	   "subs": Sub.objects.all()
     }
-    
+
 
 	return render(request, "orders/index.html", context)
-	
+
 
 def auth_register(request):
 	if request.method == "GET":
@@ -105,10 +105,11 @@ def auth_login(request):
 				login(request, user)
 				return HttpResponseRedirect(reverse("index"))
 			else:
-				return render(request, "orders/login.html", {"message": "Invalid credentials", "user": request.user.is_authenticated})
+				return render(request, "orders/login.html", {
+		 	   "items_in_cart": request.session['items_in_cart'], "message": "Invalid credentials", "user": request.user.is_authenticated})
 		except Exception as e:
 			return render(request, "orders/login.html", {"message": str(e)})
-		
+
 
 def auth_logout(request):
 	logout(request)
@@ -132,7 +133,7 @@ def add_item(request):
 		items_in_cart = request.session['items_in_cart'] + 1
 		request.session['items_in_cart'] = items_in_cart
 		return HttpResponse(f"{item} - {request.session[item]}")
-	
+
 	except Exception as e:
 		return HttpResponse("Failure!", {"success": False})
 
@@ -154,7 +155,7 @@ def edit_quantity(request):
 		request.session[item] = items;
 
 		return HttpResponse(f"{item} - {request.session[item]}")
-	
+
 	except Exception as e:
 		return HttpResponse("Failure!", {"success": False})
 
@@ -181,7 +182,7 @@ def remove_item(request):
 				return HttpResponse(quantity)
 
 		return HttpResponse(f"{item} - {items}")
-	
+
 	except Exception as e:
 		return HttpResponse(f"Failure! {str(e)} - {items}", {"success": False})
 
@@ -189,31 +190,31 @@ def remove_item(request):
 def cart(request):
 	if request.session.has_key('message'):
 		del request.session['message']
-	# Checking if the key item exist in the session 
+	# Checking if the key item exist in the session
 	if not request.session.has_key('pizza'):
 		request.session['pizza'] = []
 
 	if not request.session.has_key('items_in_cart'):
 		request.session['items_in_cart'] = 0
 
-	
+
 	if not request.session.has_key('dinner'):
 		request.session['dinner'] = []
-	
+
 	if not request.session.has_key('sub'):
 		request.session['sub'] = []
-	
+
 	if not request.session.has_key('pasta'):
 		request.session['pasta'] = []
-	
+
 	if not request.session.has_key('salad'):
 		request.session['salad'] = []
 
 	if not request.session.has_key('progress'):
 		request.session['progress'] = "cart"
-	
+
 	if not request.session.has_key('address'):
-		
+
 		request.session['address'] = {
 					"street_name": "",
 					"street_number": "",
@@ -228,25 +229,25 @@ def cart(request):
 	pizzas_aux = {}
 	for dic in request.session['pizza']:
 		pizzas_aux[list(dic)[0]]=dic[list(dic)[0]]
-	
+
 	dinners_aux = {}
 	for dic in request.session['dinner']:
 		dinners_aux[list(dic)[0]]=dic[list(dic)[0]]
-	
+
 	subs_aux = {}
 	for dic in request.session['sub']:
 		subs_aux[list(dic)[0]]=dic[list(dic)[0]]
-	
+
 	pastas_aux = {}
 	for dic in request.session['pasta']:
 		pastas_aux[list(dic)[0]]=dic[list(dic)[0]]
-	
+
 	salads_aux = {}
 	for dic in request.session['salad']:
 		salads_aux[list(dic)[0]]=dic[list(dic)[0]]
 
 	total = 0
-	# Getting all elements of type pizzas 
+	# Getting all elements of type pizzas
 	pizzas = []
 	for pizza in list(pizzas_aux):
 		try:
@@ -255,8 +256,8 @@ def cart(request):
 			total += order.price * pizzas_aux[pizza]
 		except PriceOfPizza.DoesNotExist:
 			raise Http404("Item in the order does not exist")
-	
-	# Getting all elements of type dinner 
+
+	# Getting all elements of type dinner
 	dinners = []
 	for dinner in dinners_aux:
 		try:
@@ -266,7 +267,7 @@ def cart(request):
 		except PriceOfDinner.DoesNotExist:
 			raise Http404("Item in the order does not exist")
 
-	# Getting all elements of type sub 
+	# Getting all elements of type sub
 	subs = []
 	for sub in subs_aux:
 		try:
@@ -276,7 +277,7 @@ def cart(request):
 		except PriceOfSub.DoesNotExist:
 			raise Http404("Item in the order does not exist")
 
-	# Getting all elements of type pasta 
+	# Getting all elements of type pasta
 	pastas = []
 	for pasta in pastas_aux:
 		try:
@@ -285,8 +286,8 @@ def cart(request):
 			total += order.price * pastas_aux[pasta]
 		except Pasta.DoesNotExist:
 			raise Http404("Item in the order does not exist")
-	
-	# Getting all elements of type salad 
+
+	# Getting all elements of type salad
 	salads = []
 	for salad in salads_aux:
 		try:
@@ -319,7 +320,7 @@ def update_progress(request):
 
 	try:
 		# Progress is Cart -> Place Order -> Details -> Payment
-		
+
 		#pdb.set_trace()
 		operation = request.GET["operation"]
 		progress = request.GET["progress"]
@@ -329,7 +330,7 @@ def update_progress(request):
 				request.session['progress'] = "place-order"
 
 			if progress == "place-order":
-				
+
 				address = {
 					"street_name": request.GET["street_name"],
 					"street_number": request.GET["street_number"],
@@ -339,10 +340,10 @@ def update_progress(request):
 					"neighborhoor": request.GET["neighborhoor"],
 					"city": request.GET["city"],
 					"state": request.GET["state"]
-				} 
+				}
 				request.session['address'] = address
 				request.session['progress'] = "finish"
-				
+
 
 		if operation == "previous":
 			if progress == "place-order":
@@ -364,11 +365,11 @@ def submit_order(request):
 		return HttpResponseRedirect(reverse("login"))
 	if not request.session.has_key('items_in_cart'):
 			request.session['items_in_cart'] = 0
-	
+
 	request.session['items_in_cart'] = 0
 	items = json.loads(request.POST.get('items'))
 	payment_type = request.POST.get('payment')
-	
+
 	items_order = []
 	total = 0.0
 	order = Order(status_order="SUBMITTED", user=request.user, total=total, payment_type= payment_type)
@@ -384,17 +385,17 @@ def submit_order(request):
 
 	if not request.session.has_key('dinner'):
 		request.session['dinner'] = []
-	
+
 	if not request.session.has_key('sub'):
 		request.session['sub'] = []
-	
+
 	if not request.session.has_key('pasta'):
 		request.session['pasta'] = []
-	
+
 	if not request.session.has_key('salad'):
 		request.session['salad'] = []
-	
-	
+
+
 	for d in request.session['dinner']:
 		i = PriceOfDinner.objects.get(pk=list(d)[0])
 		total += float(i.price)*int(d[list(d)[0]])
@@ -416,7 +417,7 @@ def submit_order(request):
 		description = f"Sub - {i.sub.name} - {i.size.name} Size"
 		item_order=  ItemOrder(description=description, quantity=d[list(d)[0]], price=i.price*int(d[list(d)[0]]))
 		items_order.append(item_order)
-	
+
 	for d in request.session['pasta']:
 		i = Pasta.objects.get(pk=list(d)[0])
 		total += float(i.price)*int(d[list(d)[0]])
@@ -442,13 +443,13 @@ def submit_order(request):
 	#pdb.set_trace()
 
 	request.session['progress'] = "finished"
-	
+
 	request.session['dinner'] = []
 	request.session['pizza'] = []
 	request.session['sub'] = []
 	request.session['salad'] = []
 	request.session['pasta'] = []
-	
+
 	return HttpResponse("success")
 
 def orders(request):
